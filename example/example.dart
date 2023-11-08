@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:test/test.dart';
 import 'package:clock/clock.dart';
 import 'package:manual_clock/manual_clock.dart';
@@ -7,9 +8,8 @@ class ClassDependOnNow {
 
   Duration get elapsed => clock.now().difference(_startTime);
 
-  Future<Duration> someComplicatedTask() async {
-    await Future.delayed(const Duration(seconds: 1));
-    return elapsed;
+  Future<int> someComplicatedTask() async {
+    return Future.value(123);
   }
 }
 
@@ -24,7 +24,14 @@ void main() {
       expect(stopwatch.elapsed, duration);
 
       final result = await stopwatch.someComplicatedTask();
-      expect(result, duration);
+      expect(result, 123);
+
+      var fired = false;
+      Timer(duration, () {
+        fired = true;
+      });
+      clock.elapse(duration);
+      expect(fired, true);
     });
   });
 }

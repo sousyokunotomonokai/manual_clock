@@ -1,10 +1,13 @@
+import 'package:collection/collection.dart';
 import 'package:clock/clock.dart';
 
-/// A clock which will not tick automatically, but only tick manually.
+import 'manual_timer.dart';
 
+/// A clock which will not tick automatically, but only tick manually.
 class ManualClock extends Clock {
   final DateTime _initialTime;
   var _elapsed = Duration.zero;
+  final _timers = <ManualTimer>[];
 
   ManualClock({DateTime? initialTime})
       : _initialTime = initialTime ?? clock.now();
@@ -23,6 +26,34 @@ class ManualClock extends Clock {
       throw ArgumentError.value(
           duration, 'duration', 'may not be negative value');
     }
+
+    // tick timers
+    _removeInactiveTimers();
+    var rest = duration;
+    while (_timers.isNotEmpty && rest > Duration.zero) {
+      final minNextTime = minBy(_timers, (timer) => timer.nextTime)!.nextTime;
+      assert(minNextTime > Duration.zero);
+      for (final timer in _timers) {
+        timer.elapse(minNextTime);
+      }
+      rest -= minNextTime;
+      _removeInactiveTimers();
+    }
+
     _elapsed += duration;
+  }
+
+  void addTimer(ManualTimer timer) {
+    if (timer.isActive) {
+      _timers.add(timer);
+    }
+  }
+
+  void removeTimer(ManualTimer timer) {
+    _timers.remove(timer);
+  }
+
+  void _removeInactiveTimers() {
+    _timers.removeWhere((timer) => !timer.isActive);
   }
 }
