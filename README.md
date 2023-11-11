@@ -45,6 +45,9 @@ test('a test case', () async {
     clock.elapse(duration);
     expect(fired, true);
 
+    // If you need to wait for real life time inside callback,
+    // use waitRealLifeTime(duration)
+    await waitRealLifeTime(Duration(seconds: 10));
   },
   // optionally set initial time
   initialTime: DateTime(2000, 1, 1));

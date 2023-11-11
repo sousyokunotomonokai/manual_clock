@@ -28,3 +28,24 @@ T withManualClock<T>(
     ),
   );
 }
+
+/// Wait for real life time
+///
+/// Inside [withManualClock] callback, await Future.delayed(...) don't work
+/// because time is freezed virtually.
+/// Using this function, you can wait for real life time inside [withManualClock] callback.
+Future<void> waitRealLifeTime(Duration duration) {
+  return runZoned(
+    () {
+      return Future.delayed(duration);
+    },
+    zoneSpecification: ZoneSpecification(
+      createTimer: (_, __, ___, duration, callback) {
+        return Zone.root.createTimer(duration, callback);
+      },
+      createPeriodicTimer: (_, __, ___, period, callback) {
+        return Zone.root.createPeriodicTimer(period, callback);
+      },
+    ),
+  );
+}
