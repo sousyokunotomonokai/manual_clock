@@ -6,7 +6,7 @@ import 'manual_timer.dart';
 
 /// Run [callback] with overriding the top level clock field with a manual clock.
 ///
-/// This function is useful for testing clock.now() ans [Timer] related code.
+/// This function is useful for testing clock.now() and [Timer] related code.
 T withManualClock<T>(
   T Function(ManualClock clock) callback, {
   DateTime? initialTime,

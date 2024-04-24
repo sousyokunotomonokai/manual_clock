@@ -15,7 +15,8 @@ With this library, you can test current time and Timer related code using await.
 
 ## Restrictions
 
-* Timers with 0 duration are not supported.
+* Periodic timers of 0 duration are not supported.
+* One-shot timers of 0 duration are supported.
 * If a target code contains a code like `await Future.delayed(...)`, it will stop there permanently.
 
 ## Getting started

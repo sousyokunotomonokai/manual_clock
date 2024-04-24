@@ -29,15 +29,17 @@ class ManualClock extends Clock {
 
     // tick timers
     _removeInactiveTimers();
-    var rest = duration;
-    while (_timers.isNotEmpty && rest > Duration.zero) {
-      final minNextTime = minBy(_timers, (timer) => timer.nextTime)!.nextTime;
-      assert(minNextTime > Duration.zero);
-      for (final timer in _timers) {
-        timer.elapse(minNextTime);
-      }
-      rest -= minNextTime;
-      _removeInactiveTimers();
+    if (_timers.isNotEmpty) {
+      var rest = duration;
+      do {
+        final minNextTime = minBy(_timers, (timer) => timer.nextTime)!.nextTime;
+        assert(minNextTime >= Duration.zero);
+        for (final timer in _timers) {
+          timer.elapse(minNextTime);
+        }
+        rest -= minNextTime;
+        _removeInactiveTimers();
+      } while (_timers.isNotEmpty && rest > Duration.zero);
     }
 
     _elapsed += duration;

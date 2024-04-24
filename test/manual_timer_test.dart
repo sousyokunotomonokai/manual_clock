@@ -35,6 +35,16 @@ void main() {
     });
   });
 
+  test('A one-shot timer of Duration.zero will fire immediately', () {
+    withManualClock((clock) {
+      final callback = MockTimerCallback();
+      final timer = Timer(Duration.zero, callback);
+      verifyNever(callback());
+      clock.elapse(Duration.zero);
+      verify(callback()).called(1);
+    });
+  });
+
   test('A periodic timer will fire periodically if time pass manually', () {
     withManualClock((clock) {
       final callback = MockPeriodicTimerCallback();
@@ -53,6 +63,10 @@ void main() {
   test('Multiple timers will fire if time pass manually', () {
     withManualClock((clock) {
       final list = <String>[];
+      callback0() {
+        list.add('0');
+      }
+
       callback1() {
         list.add('1');
       }
@@ -73,6 +87,7 @@ void main() {
         list.add('p5');
       }
 
+      final timer0 = Timer(Duration.zero, callback0);
       final timer1 = Timer(Duration(seconds: 1), callback1);
       final timer3 = Timer(Duration(seconds: 3), callback3);
       final timer6 = Timer(Duration(seconds: 6), callback6);
@@ -81,6 +96,7 @@ void main() {
 
       clock.elapse(Duration(seconds: 10));
       expect(list, [
+        '0',
         '1',
         'p2',
         '3',
