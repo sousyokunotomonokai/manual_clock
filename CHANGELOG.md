@@ -1,5 +1,9 @@
 # Change Log
 
+## [1.3.2](https://github.com/sousyokunotomonokai/manual_clock/tree/v1.3.2) (2024/07/30)
+
+- Add a test case for withManualClock function.
+
 ## [1.3.1](https://github.com/sousyokunotomonokai/manual_clock/tree/v1.3.1) (2024/07/30)
 
 - Fixed that ManualClock will elapse time more than specified duration.

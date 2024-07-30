@@ -1,10 +1,18 @@
 import 'dart:async';
 import 'package:test/test.dart';
+import 'package:clock/clock.dart';
 
 import 'package:manual_clock/manual_clock.dart';
 import 'package:manual_clock/src/manual_timer.dart';
 
 void main() {
+  test('The clock will be substituted with ManualClock instance', () {
+    withManualClock((c) {
+      expect(clock, c);
+      expect(clock, isA<ManualClock>());
+    });
+  });
+
   test('A Timer instance will be ManualTimer inside withManualClock callback',
       () async {
     withManualClock((clock) {
