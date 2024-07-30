@@ -1,6 +1,12 @@
 # Change Log
 
-## [1.3.0](https://github.com/sousyokunotomonokai/manual_clock/tree/v1.2.0) (2024/04/24)
+## [1.3.1](https://github.com/sousyokunotomonokai/manual_clock/tree/v1.3.1) (2024/07/30)
+
+- Fixed that ManualClock will elapse time more than specified duration.
+- Fixed that runZoned and withClock calling order is wrong.
+- Add a test case for withManualClock function.
+
+## [1.3.0](https://github.com/sousyokunotomonokai/manual_clock/tree/v1.3.0) (2024/04/24)
 
 - A one-shot timer of 0 duration is supported now.
 

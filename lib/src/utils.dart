@@ -12,19 +12,22 @@ T withManualClock<T>(
   DateTime? initialTime,
 }) {
   final clock = ManualClock(initialTime: initialTime);
-  return runZoned(
-    () => withClock(clock, () => callback(clock)),
-    zoneSpecification: ZoneSpecification(
-      createTimer: (_, __, ___, duration, callback) {
-        final timer = ManualTimer(duration, (timer) => callback());
-        clock.addTimer(timer);
-        return timer;
-      },
-      createPeriodicTimer: (_, __, ___, period, callback) {
-        final timer = ManualTimer.periodic(period, callback);
-        clock.addTimer(timer);
-        return timer;
-      },
+  return withClock(
+    clock,
+    () => runZoned(
+      () => callback(clock),
+      zoneSpecification: ZoneSpecification(
+        createTimer: (_, __, ___, duration, callback) {
+          final timer = ManualTimer(duration, (timer) => callback());
+          clock.addTimer(timer);
+          return timer;
+        },
+        createPeriodicTimer: (_, __, ___, period, callback) {
+          final timer = ManualTimer.periodic(period, callback);
+          clock.addTimer(timer);
+          return timer;
+        },
+      ),
     ),
   );
 }

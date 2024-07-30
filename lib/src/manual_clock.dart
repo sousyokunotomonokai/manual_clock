@@ -3,6 +3,10 @@ import 'package:clock/clock.dart';
 
 import 'manual_timer.dart';
 
+Duration _minDuration(Duration a, Duration b) {
+  return a.compareTo(b) < 0 ? a : b;
+}
+
 /// A clock which will not tick automatically, but only tick manually.
 class ManualClock extends Clock {
   final DateTime _initialTime;
@@ -34,10 +38,11 @@ class ManualClock extends Clock {
       do {
         final minNextTime = minBy(_timers, (timer) => timer.nextTime)!.nextTime;
         assert(minNextTime >= Duration.zero);
+        final elapsedTime = _minDuration(rest, minNextTime);
         for (final timer in _timers) {
-          timer.elapse(minNextTime);
+          timer.elapse(elapsedTime);
         }
-        rest -= minNextTime;
+        rest -= elapsedTime;
         _removeInactiveTimers();
       } while (_timers.isNotEmpty && rest > Duration.zero);
     }
