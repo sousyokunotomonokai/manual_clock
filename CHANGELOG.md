@@ -1,5 +1,11 @@
 # Change Log
 
+## [1.3.3](https://github.com/sousyokunotomonokai/manual_clock/tree/v1.3.3) (2024/07/31)
+
+- Fixed an issue that it will throw an exception when a new timer is created inside timer callback.
+- Fixed an issue that the current time inside timer callback will not pass until clock.elapse(...) finish.
+- Add pumpManualEventQueue() function (experimental)
+
 ## [1.3.2](https://github.com/sousyokunotomonokai/manual_clock/tree/v1.3.2) (2024/07/30)
 
 - Add a test case for withManualClock function.

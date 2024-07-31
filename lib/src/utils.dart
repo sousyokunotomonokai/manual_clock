@@ -52,3 +52,10 @@ Future<void> waitRealLifeTime(Duration duration) {
     ),
   );
 }
+
+/// ManualClock version of pumpEventQueue
+Future<void> pumpManualEventQueue({int times = 20}) async {
+  for (var i = 0; i < times; ++i) {
+    await Future.value();
+  }
+}

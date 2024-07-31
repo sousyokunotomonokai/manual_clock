@@ -39,15 +39,21 @@ class ManualClock extends Clock {
         final minNextTime = minBy(_timers, (timer) => timer.nextTime)!.nextTime;
         assert(minNextTime >= Duration.zero);
         final elapsedTime = _minDuration(rest, minNextTime);
-        for (final timer in _timers) {
+        _elapsed += elapsedTime;
+
+        // create a copy of the timer list to handle the case that
+        // a new timer is created inside timer callback.
+        final timers = [..._timers];
+        for (final timer in timers) {
           timer.elapse(elapsedTime);
         }
         rest -= elapsedTime;
         _removeInactiveTimers();
       } while (_timers.isNotEmpty && rest > Duration.zero);
+      _elapsed += rest;
+    } else {
+      _elapsed += duration;
     }
-
-    _elapsed += duration;
   }
 
   void addTimer(ManualTimer timer) {
