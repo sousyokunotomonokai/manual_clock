@@ -1,5 +1,9 @@
 # Change Log
 
+## [1.3.4](https://github.com/sousyokunotomonokai/manual_clock/tree/v1.3.4) (2024/12/17)
+
+- add the advertisement of our products at the bottom of README
+
 ## [1.3.3](https://github.com/sousyokunotomonokai/manual_clock/tree/v1.3.3) (2024/07/31)
 
 - Fixed an issue that it will throw an exception when a new timer is created inside timer callback.

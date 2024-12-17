@@ -54,3 +54,7 @@ test('a test case', () async {
   initialTime: DateTime(2000, 1, 1));
 });
 ```
+
+## Our products using this package
+
+* [DidRoku : A Life logging app](https://play.google.com/store/apps/details?id=com.sousyokunotomonokai.didlog)
